@@ -277,25 +277,52 @@ class vector
 			_arr = tmp;
 		}
 
-		void swap( vector& other );
+		void swap( vector& other )
+		{
+			pointer tmp_arr;
+			size_type tmp_size;
+			size_type tmp_capacity;
+			allocator_type*	tmp_alloc;
 
-		/* Non-member functions */
-		// template< class T, class Alloc >
-		// friend bool operator==( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs );
-		// template< class T, class Alloc >
-		// friend bool operator!=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs );
-		// template< class T, class Alloc >
-		// friend bool operator<( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs );
-		// template< class T, class Alloc >
-		// friend bool operator<=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs );
-		// template< class T, class Alloc >
-		// friend bool operator>( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs );
-		// template< class T, class Alloc >
-		// friend bool operator>=( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs );
+			tmp_arr = other._arr;
+			tmp_size = other._size;
+			tmp_capacity = other._capacity;
+			tmp_alloc = &other._alloc;
 
-		// template< class T, class Alloc >
-		// friend void swap( ft::vector<T,Alloc>& lhs, ft::vector<T,Alloc>& rhs );
-};
+			other._arr = _arr;
+			other._size = _size;
+			other._capacity = _capacity;
+			other._alloc = _alloc;
+
+			_arr = tmp_arr;
+			_size = tmp_size;
+			_capacity = tmp_capacity;
+			_alloc = *tmp_alloc;
+		}
+
+	};
+
+	/* Non-member functions */
+	template< class T, class Alloc >
+	bool operator==( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+
+	template< class T, class Alloc >
+	bool operator!=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+
+	template< class T, class Alloc >
+	bool operator<( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+
+	template< class T, class Alloc >
+	bool operator<=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+
+	template< class T, class Alloc >
+	bool operator>( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+
+	template< class T, class Alloc >
+	bool operator>=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+
+	template< class T, class Alloc >
+	void swap( ft::vector<T, Alloc>& lhs, ft::vector<T, Alloc>& rhs ) { lhs.swap(rhs); }
 
 };
 

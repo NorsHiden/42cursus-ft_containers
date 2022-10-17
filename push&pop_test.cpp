@@ -41,6 +41,12 @@ struct myAlloc1: std::allocator<T>
 	{
 		std::cout << RED << "copy constructor of myAlloc1 has been called" << RESET << std::endl;
 	}
+	myAlloc1& operator=(const myAlloc1& other)
+	{
+		tt = other.tt;
+		std::cout << RED << "copy assignment of myAlloc1 has been called" << RESET << std::endl;
+		return (*this);
+	}
 	
 };
 
@@ -52,14 +58,14 @@ std::ostream& operator<<(std::ostream& out, str& s)
 
 int main(void)
 {
-	// std::vector<str> filler;
+	std::vector<str> filler;
 
-	// filler.push_back(str("I just"));
-	// std::cout << "»»»»»»»" << std::endl;
-	// filler.push_back(str("wanna tell you"));
-	// std::cout << "»»»»»»»" << std::endl;
-	// filler.push_back(str("that you got this, alright ?"));
-	// std::cout << "»»»»»»»" << std::endl;
+	filler.push_back(str("I just"));
+	std::cout << "»»»»»»»" << std::endl;
+	filler.push_back(str("wanna tell you"));
+	std::cout << "»»»»»»»" << std::endl;
+	filler.push_back(str("that you got this, alright ?"));
+	std::cout << "»»»»»»»" << std::endl;
 
 	// std::vector<str> filler2;
 
@@ -78,29 +84,40 @@ int main(void)
 	// std::cout << std::endl;
 	std::cout << YELLOW << "--------------------------------------" << RESET << std::endl;
 	{
-		ft::vector<str, myAlloc1<str> > vec;
+		ft::vector<str, myAlloc1<str> > vec(filler.begin(), filler.end());
+		ft::vector<str, myAlloc1<str> > vec2;
 		str hello("hello");
 		str boyyyy("boyyyy,");
 		str good("good");
 		str bye("byeee");
 		str hehe("hehe");
 		
-		vec.push_back(hello);
-		vec.push_back(boyyyy);
-		vec.push_back(good);
-		vec.push_back(bye);
+		vec2.push_back(hello);
+		vec2.push_back(boyyyy);
+		vec2.push_back(good);
+		vec2.push_back(bye);
+
 		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
-		vec.resize(20, hehe);
+		vec.swap(vec2);
+		// vec.resize(2, hehe);
 		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
 
-		std::cout << "ft: ";
+		std::cout << "ft_vec: ";
 		for (size_t i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << ' ';
 		std::cout << std::endl;
-		std::cout << "ft_size: " << vec.size() << std::endl;
-		std::cout << "ft_capacity: " << vec.capacity() << std::endl;
-		std::cout << "ft_empty: " << vec.empty() << std::endl;
-		std::cout << "ft_allocator: " << vec.get_allocator().tt << std::endl;
+		std::cout << "ft_vec_size: " << vec.size() << std::endl;
+		std::cout << "ft_vec_capacity: " << vec.capacity() << std::endl;
+		std::cout << "ft_vec_empty: " << vec.empty() << std::endl;
+		std::cout << "ft_vec_allocator: " << vec.get_allocator().tt << std::endl;
+		std::cout << "ft_vec2: ";
+		for (size_t i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << ' ';
+		std::cout << std::endl;
+		std::cout << "ft_vec2_size: " << vec2.size() << std::endl;
+		std::cout << "ft_vec2_capacity: " << vec2.capacity() << std::endl;
+		std::cout << "ft_vec2_empty: " << vec2.empty() << std::endl;
+		std::cout << "ft_vec2_allocator: " << vec2.get_allocator().tt << std::endl;
 		// std::cout << std::endl;
 		// vec.assign(filler.rbegin(), filler.rend());
 		// std::cout << "ft: ";
@@ -114,31 +131,41 @@ int main(void)
 	}
 	std::cout << YELLOW << "--------------------------------------" << RESET << std::endl;
 	{
-		std::vector<str, myAlloc1<str> > vec;
-
+		std::vector<str, myAlloc1<str> > vec(filler.begin(), filler.end());
+		std::vector<str, myAlloc1<str> > vec2;
 		str hello("hello");
 		str boyyyy("boyyyy,");
 		str good("good");
 		str bye("byeee");
 		str hehe("hehe");
+		
+		vec2.push_back(hello);
+		vec2.push_back(boyyyy);
+		vec2.push_back(good);
+		vec2.push_back(bye);
 
-		vec.push_back(hello);
-		vec.push_back(boyyyy);
-		vec.push_back(good);
-		vec.push_back(bye);
 
 		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
-		vec.resize(20, hehe);
+		vec.swap(vec2);
+		// vec.resize(2, hehe);
 		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
 
-		std::cout << "std: ";
-		for (std::vector<str, myAlloc1<str> >::iterator it = vec.begin(); it != vec.end(); it++)
-			std::cout << *it << ' ';
+		std::cout << "std_vec: ";
+		for (size_t i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << ' ';
 		std::cout << std::endl;
-		std::cout << "original_size: " << vec.size() << std::endl;
-		std::cout << "original_capacity: " << vec.capacity() << std::endl;
-		std::cout << "original_empty: " << vec.empty() << std::endl;
-		std::cout << "original_allocator: " << vec.get_allocator().tt << std::endl;
+		std::cout << "std_vec_size: " << vec.size() << std::endl;
+		std::cout << "std_vec_capacity: " << vec.capacity() << std::endl;
+		std::cout << "std_vec_empty: " << vec.empty() << std::endl;
+		std::cout << "std_vec_allocator: " << vec.get_allocator().tt << std::endl;
+		std::cout << "std_vec2: ";
+		for (size_t i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << ' ';
+		std::cout << std::endl;
+		std::cout << "std_vec2_size: " << vec2.size() << std::endl;
+		std::cout << "std_vec2_capacity: " << vec2.capacity() << std::endl;
+		std::cout << "std_vec2_empty: " << vec2.empty() << std::endl;
+		std::cout << "std_vec2_allocator: " << vec2.get_allocator().tt << std::endl;
 
 		// vec.assign(filler.rbegin(), filler.rend());
 		// std::cout << "std: ";
