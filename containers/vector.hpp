@@ -31,24 +31,10 @@ class vector
 
 		explicit vector( const Allocator& alloc ): _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
 
-		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()): _arr(0), _size(0), _capacity(0), _alloc(alloc)
-		{
-			if (_alloc.max_size() < count)
-				throw (std::length_error("vector"));
-			assign(count, value);
-		}
+		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()): _arr(0), _size(0), _capacity(0), _alloc(alloc) { assign(count, value); }
 
 		template< class InputIt, class = typename std::enable_if<!std::is_integral<InputIt>::value, InputIt>::type >
-		vector( InputIt first, InputIt last, const Allocator& alloc = Allocator() ): _arr(0), _alloc(alloc), _size(0), _capacity(0)
-		{
-			size_t count = 0;
-
-			for (InputIt it = first; it != last; it++)
-				count++;
-			if (_alloc.max_size() < count)
-				throw (std::length_error("vector"));
-			assign(first, last);
-		}
+		vector( InputIt first, InputIt last, const Allocator& alloc = Allocator() ): _arr(0), _alloc(alloc), _size(0), _capacity(0){ assign(first, last); }
 
 		vector( const vector& other ): _alloc(other.get_allocator()), _size(other._size), _capacity(other._capacity)
 		{
@@ -58,28 +44,41 @@ class vector
 			}
 			_arr = _alloc.allocate(_capacity);
 			for (size_t i = 0; i < _size; i++)
-				_arr[i] = other._arr[i];
+				_alloc.construct(&_arr[i], other._arr[i]);
+
 		}
 		
-		~vector() { _alloc.deallocate(_arr, _capacity); };
+		~vector()
+		{
+			for (size_t i = _size; i > 0; i--)
+					_alloc.destroy(&_arr[i - 1]);
+			_alloc.deallocate(_arr, _capacity);
+		}
 
 		/* Copy assignment */
 		vector& operator=( const vector& other )
 		{
 			if (this == &other)
 				return (*this);
-			if (empty())
+			if (_capacity < other._capacity)
+			{
+				for (size_t i = _size; i > 0; i--)
+					_alloc.destroy(&_arr[i - 1]);
 				_alloc.deallocate(_arr, _capacity);
-			_capacity = other._capacity;
+				_arr = _alloc.allocate(other._capacity);
+				for (size_t i = 0; i < other._size; i++)
+					_alloc.construct(&_arr[i], other._arr[i]);
+				_capacity = other._capacity;
+			}
+			else
+			{	size_t i;
+				for (i = 0; i < other._size; i++)
+					_arr[i] = other._arr[i];
+				for (size_t j = _size; j > i; j--)
+					_alloc.destroy(&_arr[j - 1]);
+			}
 			_size = other._size;
 			_alloc = other._alloc;
-			if (!_capacity){
-				_arr = 0;
-				return (*this);
-			}
-			_arr = _alloc.allocate(_capacity);
-			for (size_t i = 0; i < _size; i++)
-				_arr[i] = other._arr[i];
 			return (*this);
 		}
 
@@ -97,17 +96,13 @@ class vector
 			}
 			else
 			{
-				for (size_t i = 0; i < _size; i++)
-					_alloc.destroy(&_arr[i]);
+				for (size_t i = _size; i > 0; i--)
+					_alloc.destroy(&_arr[i - 1]);
 				_size = count;
 			}
 			for (size_t i = 0; i < count; i++)
-				_arr[i] = value;
+				_alloc.construct(&_arr[i], value);
 
-			std::cout << "ft: ";
-			for (size_t i = 0; i < size(); i++)
-				std::cout << _arr[i] << ' ';
-			std::cout << std::endl;
 		}
 		
 		template< class InputIt, class = typename std::enable_if<!std::is_integral<InputIt>::value, InputIt>::type>
@@ -129,17 +124,13 @@ class vector
 			}
 			else
 			{
-				for (size_t i = 0; i < _size; i++)
-					_alloc.destroy(&_arr[i]);
+				for (size_t i = _size; i > 0; i--)
+					_alloc.destroy(&_arr[i - 1]);
 				_size = count;
 			}
 			for (size_t i = 0; i < count; i++)
-				_arr[i] = *(first + i);
+				_alloc.construct(&_arr[i], *(first + i));
 
-			std::cout << "ft: ";
-			for (size_t i = 0; i < size(); i++)
-				std::cout << _arr[i] << ' ';
-			std::cout << std::endl;
 		}
 
 		/* get_allocator member functions */
@@ -199,7 +190,7 @@ class vector
 				return ;
 			T* tmp = _alloc.allocate(new_cap);
 			for (size_t i = 0; i < _size; i++)
-				tmp[i] = _arr[i];
+				_alloc.construct(&tmp[i], _arr[i]);
 			if (_arr)
 				_alloc.deallocate(_arr, _capacity);
 			_arr = tmp;
@@ -209,7 +200,14 @@ class vector
 		size_type capacity() const { return (_capacity); }
 
 		/* Modifiers */
-		void clear();
+		void clear()
+		{
+			if (!_size)
+				return ;
+			for (size_t i = _size; i > 0; i--)
+					_alloc.destroy(&_arr[i - 1]);
+			_size = 0;
+		}
 
 		// iterator insert( const_iterator pos, const T& value );
 		// iterator insert( const_iterator pos, size_type count, const T& value );
@@ -219,10 +217,65 @@ class vector
 		// iterator erase( iterator pos );
 		// iterator erase( iterator first, iterator last );
 
-		void push_back( const T& value );
-		void pop_back();
+		void push_back( const T& value )
+		{
+			pointer tmp;
 
-		void resize( size_type count, T value = T() );
+			if (!_capacity)
+				tmp = _alloc.allocate(1);
+			else if (_size == _capacity)
+				tmp = _alloc.allocate(_capacity * 2);
+			else
+				tmp = _arr;
+			for (size_t i = 0; _capacity && _size == _capacity && i < _size; i++)
+				_alloc.construct(&tmp[i], _arr[i]);
+			_alloc.construct(&tmp[_size], value);
+			for (size_t i = _size; _capacity && _size == _capacity && i > 0; i--)
+				_alloc.destroy(&_arr[i - 1]);
+			if (_capacity && _size == _capacity)
+			{
+				_alloc.deallocate(_arr, _capacity);
+				_capacity *= 2;
+			}
+			else if (!_capacity)
+				_capacity++;
+			_size++;
+			_arr = tmp;
+		}
+
+		void pop_back()
+		{
+			_alloc.destroy(&_arr[_size - 1]);
+			_size--;
+		}
+
+		void resize( size_type count, T& value = T() )
+		{
+			pointer tmp;
+
+			if (count == _size) return ;
+
+			if (!count){ clear(); return ; }
+
+			if (count > _capacity)
+			{
+				tmp = _alloc.allocate(count);
+				for (size_t i = count; i > _size; i--)
+					_alloc.construct(&tmp[i - 1], value);
+				for (size_t i = _size ; i > 0; i--)
+					_alloc.construct(&tmp[i - 1], _arr[i - 1]);
+				_capacity = count;
+			}
+			else
+				tmp = _arr;
+			if (count < _size)
+			{
+				for (size_t i = _size; i > count; i--)
+					_alloc.destroy(&_arr[i - 1]);
+			}
+			_size = count;
+			_arr = tmp;
+		}
 
 		void swap( vector& other );
 
