@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:23:30 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/17 16:33:09 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/26 09:04:36 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 namespace ft
 {
-	
 	template <bool C, class _Tp = void> struct enable_if {};
 	template <class _Tp> struct enable_if<true, _Tp> { typedef _Tp type; };
 
@@ -34,7 +33,6 @@ namespace ft
 	template<> struct is_integral<unsigned short int> { static const bool value = true; };
 	template<> struct is_integral<unsigned long int> { static const bool value = true; };
 	template<> struct is_integral<unsigned long long int> { static const bool value = true; };
-	
 };
 
 #endif /* _TYPE_TRAITS_ */

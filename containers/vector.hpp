@@ -4,11 +4,11 @@
 # include <iostream>
 # include <memory>
 # include "type_traits.hpp"
-# include "iterators.hpp"
+# include "iterator.hpp"
+# include "reverse_iterator.hpp"
 
 namespace ft
 {
-
 	template<class T, class Allocator = std::allocator<T> >
 	class vector
 	{
@@ -19,26 +19,33 @@ namespace ft
 			size_t				_capacity;
 		
 		public:
-			typedef T									value_type;
-			typedef Allocator							allocator_type;
-			typedef std::size_t							size_type;
-			typedef std::ptrdiff_t						difference_type;
-			typedef value_type&							reference;
-			typedef const value_type&					const_reference;
-			typedef typename Allocator::pointer			pointer;
-			typedef typename Allocator::const_pointer	const_pointer;
+			typedef T										value_type;
+			typedef Allocator								allocator_type;
+			typedef std::size_t								size_type;
+			typedef std::ptrdiff_t							difference_type;
+			typedef value_type&								reference;
+			typedef const value_type&						const_reference;
+			typedef typename Allocator::pointer				pointer;
+			typedef typename Allocator::const_pointer		const_pointer;
+			typedef ft::Iterator<T>							iterator;
+			typedef const ft::Iterator<T>					const_iterator;
+			typedef ft::reverse_iterator<T>					reverse_iterator;
+			typedef const ft::reverse_iterator<T>			const_reverse_iterator;
 
-			/* Constructors & Destructor */
+			/* Constructors && Destructor */
 			vector(): _alloc(Allocator()), _arr(0), _size(0), _capacity(0) {}
 
 			explicit vector( const Allocator& alloc ): _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
 
-			explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()): _arr(0), _size(0), _capacity(0), _alloc(alloc) { assign(count, value); }
+			explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()):
+				_arr(0), _size(0), _capacity(0), _alloc(alloc) { assign(count, value); }
 
 			template<class InputIt>
-			vector( InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = 0 ): _arr(0), _alloc(alloc), _size(0), _capacity(0){ assign(first, last); }
+			vector(typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last, const Allocator& alloc = Allocator()): 
+				_arr(0), _alloc(alloc), _size(0), _capacity(0) { assign(first, last); }
 
-			vector( const vector& other ): _alloc(other.get_allocator()), _size(other._size), _capacity(other._capacity)
+			vector( const vector& other ):
+				_alloc(other.get_allocator()), _size(other._size), _capacity(other._capacity)
 			{
 				if (!_capacity){
 					_arr = 0;
@@ -56,7 +63,7 @@ namespace ft
 				_alloc.deallocate(_arr, _capacity);
 			}
 
-			/* Copy assignment */
+			/* Copy assignment operator */
 			vector& operator=( const vector& other )
 			{
 				if (this == &other)
@@ -107,13 +114,9 @@ namespace ft
 			}
 			
 			template< class InputIt>
-			void assign( InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = 0)
+			void assign(typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last)
 			{
-				size_t count = 0;
-
-				for (InputIt it = first; it != last; it++)
-					count++;
-
+				size_t count = std::distance(first, last);
 				if (_alloc.max_size() < count)
 					throw (std::length_error("vector"));
 				if (_capacity < count)
@@ -131,7 +134,6 @@ namespace ft
 				}
 				for (size_t i = 0; i < count; i++)
 					_alloc.construct(&_arr[i], *(first + i));
-
 			}
 
 			/* get_allocator member functions */
@@ -166,17 +168,17 @@ namespace ft
 			const_pointer data() const { return (_arr); }
 
 			/* Iterators */
-			// iterator begin();
-			// iterator end();
+			iterator begin() { return (_arr); }
+			iterator end() { return (_arr + _size); }
 
-			// const_iterator begin() const;
-			// const_iterator end() const;
+			const_iterator begin() const { return (_arr); }
+			const_iterator end() const { return (_arr + _size); }
 
-			// reverse_iterator rbegin();
-			// reverse_iterator rend();
+			reverse_iterator rbegin() { return (_arr + _size); }
+			reverse_iterator rend() { return (_arr); }
 
-			// const_reverse_iterator rbegin() const;
-			// const_reverse_iterator rend() const;
+			const_reverse_iterator rbegin() const { return (_arr + _size); }
+			const_reverse_iterator rend() const { return (_arr); }
 
 			/* Capacity */
 			bool empty() const { return (!_size); }
@@ -192,6 +194,8 @@ namespace ft
 				T* tmp = _alloc.allocate(new_cap);
 				for (size_t i = 0; i < _size; i++)
 					_alloc.construct(&tmp[i], _arr[i]);
+				for (size_t i = 0; i < _size; i++)
+					_alloc.destroy(&_arr[i]);
 				if (_arr)
 					_alloc.deallocate(_arr, _capacity);
 				_arr = tmp;
@@ -210,13 +214,66 @@ namespace ft
 				_size = 0;
 			}
 
-			// iterator insert( const_iterator pos, const T& value );
-			// iterator insert( const_iterator pos, size_type count, const T& value );
-			// template< class InputIt >
-			// iterator insert( const_iterator pos, InputIt first, InputIt last );
+			iterator insert( const_iterator pos, const T& value ) { return (insert(pos, 1, value)); }
 
-			// iterator erase( iterator pos );
-			// iterator erase( iterator first, iterator last );
+			iterator insert( const_iterator pos, size_type count, const T& value )
+			{
+				size_t pos_loc = std::distance(begin(), pos);
+				if (!count) return (pos);
+				if (!_capacity)
+					reserve(count);
+				else if (_size + count > _capacity * 2)
+					reserve(_size + count);
+				else if (_size + count > _capacity)
+					reserve(_capacity * 2);
+				size_t i;
+				for (i = _size; i > pos_loc; i--)
+					_alloc.construct(&_arr[i + count - 1], _arr[i - 1]);
+				size_t new_pos = pos_loc;
+				for (size_t j = count; j > 0; j--)
+					_alloc.construct(&_arr[pos_loc++], value);
+				_size += count;
+				return (&_arr[new_pos]);
+			}
+
+			template< class InputIt >
+			iterator insert( const_iterator pos, InputIt first, InputIt last )
+			{
+				size_t count = std::distance(first, last);
+					
+				if (!count) return (pos);
+				size_t pos_loc = pos - begin();
+				if (!_capacity)
+					reserve(count);
+				else if (_size + count > _capacity * 2)
+					reserve(_size + count);
+				else if (_size + count > _capacity)
+					reserve(_capacity * 2);
+				size_t i;
+				for (i = _size; i > pos_loc; i--)
+					_alloc.construct(&_arr[i + count - 1], _arr[i - 1]);
+				size_t new_pos = pos_loc;
+				i = 0;
+				for (InputIt it = first; i++ < count && it != last; it++)
+					_alloc.construct(&_arr[pos_loc++], *it);
+				_size += count;
+				return (&_arr[new_pos]);
+			}
+
+			iterator erase( iterator pos ) { return (erase(pos, pos + 1)); }
+
+			iterator erase( iterator first, iterator last )
+			{
+				if (first == last) return (first);
+
+				size_t i = 0;
+				for (i = 0; last + i < end(); i++)
+					*(first + i) = *(last + i);
+				while (first + i != end())
+					_alloc.destroy(&*(first + i++));
+				_size -= last - first;
+				return (first);
+			}
 
 			void push_back( const T& value )
 			{
@@ -280,30 +337,12 @@ namespace ft
 
 			void swap( vector& other )
 			{
-				pointer tmp_arr;
-				size_type tmp_size;
-				size_type tmp_capacity;
-				allocator_type*	tmp_alloc;
-
-				tmp_arr = other._arr;
-				tmp_size = other._size;
-				tmp_capacity = other._capacity;
-				tmp_alloc = &other._alloc;
-
-				other._arr = _arr;
-				other._size = _size;
-				other._capacity = _capacity;
-				other._alloc = _alloc;
-
-				_arr = tmp_arr;
-				_size = tmp_size;
-				_capacity = tmp_capacity;
-				_alloc = *tmp_alloc;
+				std::swap(_arr, other._arr);
+				std::swap(_size, other._size);
+				std::swap(_capacity, other._capacity);
+				std::swap(_alloc, other._alloc);
 			}
-
 	};
-
-	
 
 	/* Non-member functions */
 	template< class T, class Alloc >
@@ -326,7 +365,6 @@ namespace ft
 
 	template< class T, class Alloc >
 	void swap( ft::vector<T, Alloc>& lhs, ft::vector<T, Alloc>& rhs ) { lhs.swap(rhs); }
-
 };
 
 #endif /* _VECTOR_H_ */

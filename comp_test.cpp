@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-// #include "containers/vector.hpp"
+#include "containers/vector.hpp"
 
 #define RED  "\033[0;31m"
 #define GREEN  "\033[0;32m"
@@ -58,25 +58,75 @@ std::ostream& operator<<(std::ostream& out, str& s)
 
 int main(void)
 {
-	std::vector<str> v1;
-	std::vector<str> v2;
+	std::cout << YELLOW << "•••••••••••••••••••FT•••••••••••••••••••" << RESET << std::endl;
+	{
+		ft::vector<str, myAlloc1<str> > v1;
 
+		v1.reserve(5);
 
-	v1.push_back(str("a"));
-	v1.push_back(str("b"));
-	v1.push_back(str("c"));
-	v1.push_back(str("d"));
-	str hh("ok");
+		str hello("hello");
+		str boyyyy("boyyyy,");
+		str good("good");
+		str bye("byeee");
+		str hehe1("hehe1");
+		str hehe2("hehe2");
+		
+		v1.push_back(hello);
+		v1.push_back(boyyyy);
+		v1.push_back(good);
+		v1.push_back(bye);
+		for (ft::vector<str, myAlloc1<str> >::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << ' ';
+		std::cout << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		std::cout << *v1.erase(v1.begin(), v1.end()) << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		for (ft::vector<str, myAlloc1<str> >::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << ' ';
+		std::cout << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		// std::cout << *v1.erase(v1.end(), hehe2) << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		// v1.insert(v1.end(), 1, 2);
+		// v1.insert(v1.end(), 33);
+		for (ft::vector<str, myAlloc1<str> >::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << ' ';
+		std::cout << std::endl;
+	}
+	std::cout << YELLOW << "•••••••••••••••••••STD•••••••••••••••••••" << RESET << std::endl;
+	{
+		std::vector<str, myAlloc1<str> > v1;
 
-	std::vector<str>::iterator it = v1.end();
-	std::cout << *it << std::endl;
-	// // v1.push_back("e");
-	// v2.push_back(str("a"));
-	// v2.push_back(str("b"));
-	// v2.push_back(str("c"));
-	// v2.push_back(str("d"));
+		v1.reserve(5);
 
-	// std::vector<str>::iterator;
-	// std::cout << (v1 <= v2) << std::endl;
+		str hello("hello");
+		str boyyyy("boyyyy,");
+		str good("good");
+		str bye("byeee");
+		str hehe1("hehe1");
+		str hehe2("hehe2");
+		
+		v1.push_back(hello);
+		v1.push_back(boyyyy);
+		v1.push_back(good);
+		v1.push_back(bye);
+		for (std::vector<str, myAlloc1<str> >::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << ' ';
+		std::cout << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		std::cout << *v1.erase(v1.begin(), v1.end()) << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		for (std::vector<str, myAlloc1<str> >::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << ' ';
+		std::cout << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		// std::cout << *v1.erase(v1.begin(), v1.end() - 1) << std::endl;
+		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
+		// v1.insert(v1.end(), 1, 2);
+		// v1.insert(v1.end(), 33);
+		for (std::vector<str, myAlloc1<str> >::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << ' ';
+		std::cout << std::endl;
+	}
 	return (0);
 }

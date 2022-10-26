@@ -103,16 +103,16 @@ int main(void)
 		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
 
 		std::cout << "ft_vec: ";
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << ' ';
+		for (ft::vector<str, myAlloc1<str> >::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << ' ';
 		std::cout << std::endl;
 		std::cout << "ft_vec_size: " << vec.size() << std::endl;
 		std::cout << "ft_vec_capacity: " << vec.capacity() << std::endl;
 		std::cout << "ft_vec_empty: " << vec.empty() << std::endl;
 		std::cout << "ft_vec_allocator: " << vec.get_allocator().tt << std::endl;
 		std::cout << "ft_vec2: ";
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << ' ';
+		for (ft::vector<str, myAlloc1<str> >::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << ' ';
 		std::cout << std::endl;
 		std::cout << "ft_vec2_size: " << vec2.size() << std::endl;
 		std::cout << "ft_vec2_capacity: " << vec2.capacity() << std::endl;
@@ -151,16 +151,16 @@ int main(void)
 		std::cout << "∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞\n";
 
 		std::cout << "std_vec: ";
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << ' ';
+		for (std::vector<str, myAlloc1<str> >::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << ' ';
 		std::cout << std::endl;
 		std::cout << "std_vec_size: " << vec.size() << std::endl;
 		std::cout << "std_vec_capacity: " << vec.capacity() << std::endl;
 		std::cout << "std_vec_empty: " << vec.empty() << std::endl;
 		std::cout << "std_vec_allocator: " << vec.get_allocator().tt << std::endl;
 		std::cout << "std_vec2: ";
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << ' ';
+		for (std::vector<str, myAlloc1<str> >::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << ' ';
 		std::cout << std::endl;
 		std::cout << "std_vec2_size: " << vec2.size() << std::endl;
 		std::cout << "std_vec2_capacity: " << vec2.capacity() << std::endl;
