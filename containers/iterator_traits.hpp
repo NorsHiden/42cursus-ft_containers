@@ -6,20 +6,22 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 09:02:31 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/26 09:03:21 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:01:23 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITER_TRAITS_H
 # define ITER_TRAITS_H
 
+# include <iostream>
+
 namespace ft
 {
-	struct input_iterator_tag {};
-	struct output_iterator_tag {};
-	struct forward_iterator_tag {};
-	struct bidirectional_iterator_tag {};
-	struct random_access_iterator_tag {};
+	struct input_iterator_tag			{};
+	struct output_iterator_tag			{};
+	struct forward_iterator_tag			{};
+	struct bidirectional_iterator_tag	{};
+	struct random_access_iterator_tag	{};
 
 	template <class T>
 	struct iterator_traits

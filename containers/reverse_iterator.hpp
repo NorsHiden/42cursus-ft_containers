@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:27:38 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/26 09:04:24 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:43:50 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ namespace ft
 	class reverse_iterator
 	{
 		public:
-			typedef typename iterator_type								Iter;
+			typedef Iter												iterator_type;
 			typedef typename iterator_traits<Iter>::iterator_category	iterator_category;
 			typedef typename iterator_traits<Iter>::value_type			value_type;
 			typedef typename iterator_traits<Iter>::difference_type		difference_type;
@@ -61,7 +61,7 @@ namespace ft
 			reverse_iterator& 	operator++()							{ --current; return (*this); }
 			reverse_iterator& 	operator--()							{ ++current; return (*this); }
 			reverse_iterator 	operator++( int )						{ Iter tmp = current--; return (tmp); }
-			reverse_iterator 	operator--( int )						{ Iter tmp = current++ return (tmp); }
+			reverse_iterator 	operator--( int )						{ Iter tmp = current++; return (tmp); }
 			reverse_iterator 	operator+( difference_type n ) const	{ return (current - n); }
 			reverse_iterator 	operator-( difference_type n ) const	{ return (current + n); }
 			reverse_iterator& 	operator+=( difference_type n )			{ current -= n ;return (*this); }

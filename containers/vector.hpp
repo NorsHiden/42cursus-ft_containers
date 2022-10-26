@@ -6,6 +6,7 @@
 # include "type_traits.hpp"
 # include "iterator.hpp"
 # include "reverse_iterator.hpp"
+# include "lexicographical_compare.hpp"
 
 namespace ft
 {
@@ -346,22 +347,58 @@ namespace ft
 
 	/* Non-member functions */
 	template< class T, class Alloc >
-	bool operator==( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+	bool operator==( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	template< class T, class Alloc >
-	bool operator!=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+	bool operator!=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
+	{
+		if (lhs.size() != rhs.size())
+			return (true);
+		return (!ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	template< class T, class Alloc >
-	bool operator<( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+	bool operator<( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
+	{
+		if (lhs.size() < rhs.size())
+			return (true);
+		if (lhs.size() >= rhs.size())
+			return (false);
+	}
 
 	template< class T, class Alloc >
-	bool operator<=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+	bool operator<=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
+	{
+		if (lhs.size() < rhs.size())
+			return (true);
+		if (lhs.size() > rhs.size())
+			return (false);
+		return (ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	template< class T, class Alloc >
-	bool operator>( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+	bool operator>( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
+	{
+		if (lhs.size() <= rhs.size())
+			return (false);
+		if (lhs.size() > rhs.size())
+			return (true);
+	}
 
 	template< class T, class Alloc >
-	bool operator>=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs );
+	bool operator>=( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
+	{
+		if (lhs.size() > rhs.size())
+			return (true);
+		if (lhs.size() < rhs.size())
+			return (false);
+		return (ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	template< class T, class Alloc >
 	void swap( ft::vector<T, Alloc>& lhs, ft::vector<T, Alloc>& rhs ) { lhs.swap(rhs); }
