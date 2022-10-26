@@ -2,11 +2,10 @@
 # define _VECTOR_H_
 
 # include <iostream>
-# include <memory>
-# include "type_traits.hpp"
-# include "iterator.hpp"
-# include "reverse_iterator.hpp"
-# include "lexicographical_compare.hpp"
+# include <type_traits.hpp>
+# include <iterator.hpp>
+# include <reverse_iterator.hpp>
+# include <lexicographical_compare.hpp>
 
 namespace ft
 {
@@ -28,8 +27,8 @@ namespace ft
 			typedef const value_type&						const_reference;
 			typedef typename Allocator::pointer				pointer;
 			typedef typename Allocator::const_pointer		const_pointer;
-			typedef ft::Iterator<T>							iterator;
-			typedef const ft::Iterator<T>					const_iterator;
+			typedef ft::RandomAccessIterator<T>				iterator;
+			typedef const ft::RandomAccessIterator<T>		const_iterator;
 			typedef ft::reverse_iterator<T>					reverse_iterator;
 			typedef const ft::reverse_iterator<T>			const_reverse_iterator;
 
