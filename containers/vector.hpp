@@ -2,8 +2,9 @@
 # define _VECTOR_H_
 
 # include <iostream>
-# include <type_traits.hpp>
+# include <equal.hpp>
 # include <iterator.hpp>
+# include <type_traits.hpp>
 # include <reverse_iterator.hpp>
 # include <lexicographical_compare.hpp>
 
@@ -350,7 +351,7 @@ namespace ft
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
-		return (ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
 	template< class T, class Alloc >
@@ -358,16 +359,17 @@ namespace ft
 	{
 		if (lhs.size() != rhs.size())
 			return (true);
-		return (!ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+		return (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
 	template< class T, class Alloc >
 	bool operator<( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
 	{
-		if (lhs.size() < rhs.size())
-			return (true);
-		if (lhs.size() >= rhs.size())
+		if (lhs.size() > rhs.size())
 			return (false);
+		if (!lhs.size() && rhs.size())
+			return (true);
+		return (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template< class T, class Alloc >
@@ -375,18 +377,19 @@ namespace ft
 	{
 		if (lhs.size() < rhs.size())
 			return (true);
-		if (lhs.size() > rhs.size())
-			return (false);
-		return (ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+		if (lhs.size() == rhs.size())
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) || ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (false);
 	}
 
 	template< class T, class Alloc >
 	bool operator>( const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs )
 	{
-		if (lhs.size() <= rhs.size())
+		if (lhs.size() < rhs.size())
 			return (false);
-		if (lhs.size() > rhs.size())
+		if (!rhs.size() && lhs.size())
 			return (true);
+		return (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && !ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template< class T, class Alloc >
@@ -394,9 +397,9 @@ namespace ft
 	{
 		if (lhs.size() > rhs.size())
 			return (true);
-		if (lhs.size() < rhs.size())
-			return (false);
-		return (ft::lexicographical_compare(lhs.begin(), rhs.end(), rhs.begin(), rhs.end()));
+		if (lhs.size() == rhs.size())
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) || !ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (false);
 	}
 
 	template< class T, class Alloc >
