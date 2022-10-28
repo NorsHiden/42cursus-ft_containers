@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:27:38 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/26 10:43:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:54:38 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,17 @@ namespace ft
 			
 		public:
 			/* Constructors && Destructor */
-			reverse_iterator()																{}
-			explicit reverse_iterator( iterator_type x ): current(x)						{}
+			reverse_iterator()															{}
+			explicit reverse_iterator( iterator_type x ): current(x)					{}
 			template< class U >
-			reverse_iterator( const reverse_iterator<U>& other ): current(other.current)	{}
-			~reverse_iterator()																{}
+			reverse_iterator( const reverse_iterator<U>& other ): current(other.base())	{}
+			~reverse_iterator()															{}
 
 			/* Copy assignment operator */
 			template< class U >
 			reverse_iterator& operator=( const reverse_iterator<U>& other )
 			{
-				if (this == &other)
-					return (*this);
-				current = other.current;
+				current = other.base();
 				return (*this);
 			}
 
@@ -53,19 +51,19 @@ namespace ft
 			iterator_type base() const	{ return (current); }
 			
 			/* Offset dereference operator */
-			reference operator*() const	{ Iter tmp = current; return (*--tmp); }
-			pointer operator->() const	{ Iter tmp = current; return (&*--tmp); }
+			typename iterator_type::reference operator*() const	{ Iter tmp = current; return (*--tmp); }
+			typename iterator_type::pointer operator->() const	{ return (&*(current - 1)); }
 
 			/* Arithmetic operators */
-			reference			operator[](difference_type n) const 	{ return (*(current - n - 1)); }
-			reverse_iterator& 	operator++()							{ --current; return (*this); }
-			reverse_iterator& 	operator--()							{ ++current; return (*this); }
-			reverse_iterator 	operator++( int )						{ Iter tmp = current--; return (tmp); }
-			reverse_iterator 	operator--( int )						{ Iter tmp = current++; return (tmp); }
-			reverse_iterator 	operator+( difference_type n ) const	{ return (current - n); }
-			reverse_iterator 	operator-( difference_type n ) const	{ return (current + n); }
-			reverse_iterator& 	operator+=( difference_type n )			{ current -= n ;return (*this); }
-			reverse_iterator& 	operator-=( difference_type n )			{ current += n ;return (*this); }
+			typename iterator_type::reference operator[](difference_type n) const 	{ return (*(current - n - 1)); }
+			reverse_iterator& 	operator++()										{ --current; return (*this); }
+			reverse_iterator& 	operator--()										{ ++current; return (*this); }
+			reverse_iterator 	operator++( int )									{ Iter tmp = current--; return (reverse_iterator(tmp)); }
+			reverse_iterator 	operator--( int )									{ Iter tmp = current++; return (reverse_iterator(tmp)); }
+			reverse_iterator 	operator+( difference_type n ) const				{ return ( reverse_iterator(current - n) ); }
+			reverse_iterator 	operator-( difference_type n ) const				{ return ( reverse_iterator(current + n) ); }
+			reverse_iterator& 	operator+=( difference_type n )						{ current -= n ;return (*this); }
+			reverse_iterator& 	operator-=( difference_type n )						{ current += n ;return (*this); }
 	};
 
 	/* Non-member function */
@@ -96,12 +94,12 @@ namespace ft
 	template< class Iter >
 	reverse_iterator<Iter>
 	operator+( typename reverse_iterator<Iter>::difference_type n,
-            	const reverse_iterator<Iter>& it )					{ return (it - n); }
+            	const reverse_iterator<Iter>& it )					{ return (it + n); }
 
 	template< class Iterator >
 	typename reverse_iterator<Iterator>::difference_type
 	operator-( const reverse_iterator<Iterator>& lhs,
-				const reverse_iterator<Iterator>& rhs )				{ return (lhs.base() - rhs.base()); }
+				const reverse_iterator<Iterator>& rhs )				{ return ( rhs.base() - lhs.base()); }
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 09:02:31 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/26 11:01:23 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/28 10:04:08 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 
 namespace ft
 {
-	struct input_iterator_tag			{};
-	struct output_iterator_tag			{};
-	struct forward_iterator_tag			{};
-	struct bidirectional_iterator_tag	{};
-	struct random_access_iterator_tag	{};
-
 	template <class T>
 	struct iterator_traits
 	{
@@ -30,7 +24,7 @@ namespace ft
 		typedef std::ptrdiff_t					difference_type;
 		typedef T*								pointer;
 		typedef T&								reference;
-		typedef ft::random_access_iterator_tag	iterator_category;
+		typedef std::random_access_iterator_tag	iterator_category;
 	};
 };
 

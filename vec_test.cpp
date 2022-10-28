@@ -60,62 +60,66 @@ int main(void)
 {
 	std::cout << YELLOW << "•••••••••••••••••••FT•••••••••••••••••••" << RESET << std::endl;
 	{
-		ft::vector<int> vecL;
-		ft::vector<int> vecR;
+		ft::vector<std::string> vecL;
+		ft::vector<std::string> vecR;
 
-		vecL.push_back(0);
-		vecL.push_back(1);
-		vecL.push_back(2);
-		vecL.push_back(3);
-		vecL.push_back(4);
+		// vecL.push_back(0);
+		// vecL.push_back(1);
+		// vecL.push_back(2);
+		// vecL.push_back(3);
+		// vecL.push_back(4);
+		vecL.push_back("hello");
 
-		vecR.push_back(0);
-		vecR.push_back(1);
-		vecR.push_back(2);
-		vecR.push_back(3);
-		vecR.push_back(4);
+		// vecR.push_back(0);
+		// vecR.push_back(1);
+		// vecR.push_back(2);
+		// vecR.push_back(3);
+		// vecR.push_back(4);
+		std::cout << "----------------ITERATORS-----------------" << std::endl;
+		// ft::vector<std::string>::reverse_iterator rit = vecL.rbegin();
+		std::cout << ft::is_integral<ft::remove_cv<const int>::type >::value << std::endl;
 		std::cout << "----------------STATS-----------------" << std::endl;
 		std::cout << "\t\tvecL\t|\tvecR" << std::endl;
 		std::cout << "size:\t\t" << vecL.size() << "\t|\t" << vecR.size() << std::endl;
 		std::cout << "capacity:\t" << vecL.capacity() << "\t|\t" << vecR.capacity() << std::endl;
 		std::cout << "----------------RESULT-----------------" << std::endl;
 
-		std::cout << "vecL == vecR:" << (vecL == vecR) << std::endl;
-		std::cout << "vecL != vecR:" << (vecL != vecR) << std::endl;
-		std::cout << "vecL <= vecR:" << (vecL <= vecR) << std::endl;
-		std::cout << "vecL >= vecR:" << (vecL >= vecR) << std::endl;
-		std::cout << "vecL < vecR:" << (vecL < vecR) << std::endl;
-		std::cout << "vecL > vecR:" << (vecL > vecR) << std::endl;
+		// std::cout << "vecL == vecR:" << (vecL == vecR) << std::endl;
+		// std::cout << "vecL != vecR:" << (vecL != vecR) << std::endl;
+		// std::cout << "vecL <= vecR:" << (vecL <= vecR) << std::endl;
+		// std::cout << "vecL >= vecR:" << (vecL >= vecR) << std::endl;
+		// std::cout << "vecL < vecR:" << (vecL < vecR) << std::endl;
+		// std::cout << "vecL > vecR:" << (vecL > vecR) << std::endl;
 	}
-	std::cout << YELLOW << "•••••••••••••••••••STD•••••••••••••••••••" << RESET << std::endl;
-	{
-		std::vector<int> vecL;
-		std::vector<int> vecR;
+	// std::cout << YELLOW << "•••••••••••••••••••STD•••••••••••••••••••" << RESET << std::endl;
+	// {
+	// 	std::vector<int> vecL;
+	// 	std::vector<int> vecR;
 
-		vecL.push_back(0);
-		vecL.push_back(1);
-		vecL.push_back(2);
-		vecL.push_back(3);
-		vecL.push_back(4);
+	// 	vecL.push_back(0);
+	// 	vecL.push_back(1);
+	// 	vecL.push_back(2);
+	// 	vecL.push_back(3);
+	// 	vecL.push_back(4);
 
-		vecR.push_back(0);
-		vecR.push_back(1);
-		vecR.push_back(2);
-		vecR.push_back(3);
-		vecR.push_back(4);
+	// 	vecR.push_back(0);
+	// 	vecR.push_back(1);
+	// 	vecR.push_back(2);
+	// 	vecR.push_back(3);
+	// 	vecR.push_back(4);
 
-		std::cout << "----------------STATS-----------------" << std::endl;
-		std::cout << "\t\tvecL\t|\tvecR" << std::endl;
-		std::cout << "size:\t\t" << vecL.size() << "\t|\t" << vecR.size() << std::endl;
-		std::cout << "capacity:\t" << vecL.capacity() << "\t|\t" << vecR.capacity() << std::endl;
-		std::cout << "----------------RESULT-----------------" << std::endl;
+	// 	std::cout << "----------------STATS-----------------" << std::endl;
+	// 	std::cout << "\t\tvecL\t|\tvecR" << std::endl;
+	// 	std::cout << "size:\t\t" << vecL.size() << "\t|\t" << vecR.size() << std::endl;
+	// 	std::cout << "capacity:\t" << vecL.capacity() << "\t|\t" << vecR.capacity() << std::endl;
+	// 	std::cout << "----------------RESULT-----------------" << std::endl;
 
-		std::cout << "vecL == vecR:" << (vecL == vecR) << std::endl;
-		std::cout << "vecL != vecR:" << (vecL != vecR) << std::endl;
-		std::cout << "vecL <= vecR:" << (vecL <= vecR) << std::endl;
-		std::cout << "vecL >= vecR:" << (vecL >= vecR) << std::endl;
-		std::cout << "vecL < vecR:" << (vecL < vecR) << std::endl;
-		std::cout << "vecL > vecR:" << (vecL > vecR) << std::endl;
-	}
+	// 	std::cout << "vecL == vecR:" << (vecL == vecR) << std::endl;
+	// 	std::cout << "vecL != vecR:" << (vecL != vecR) << std::endl;
+	// 	std::cout << "vecL <= vecR:" << (vecL <= vecR) << std::endl;
+	// 	std::cout << "vecL >= vecR:" << (vecL >= vecR) << std::endl;
+	// 	std::cout << "vecL < vecR:" << (vecL < vecR) << std::endl;
+	// 	std::cout << "vecL > vecR:" << (vecL > vecR) << std::endl;
+	// }
 	return (0);
 }

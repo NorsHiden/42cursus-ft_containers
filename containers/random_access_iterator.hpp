@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator.hpp                                       :+:      :+:    :+:   */
+/*   random_access_iterator.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/26 20:09:37 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/28 10:18:18 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ namespace ft
 			
 		public:
 			/* Constructors && Destructor */
-			RandomAccessIterator(): _p(0)								{}
-			RandomAccessIterator(const reference p): _p(&p)				{}
-			RandomAccessIterator(const pointer p): _p(p)				{}
-			RandomAccessIterator(const RandomAccessIterator& other): _p(other._p)	{}
-			~RandomAccessIterator()										{}
+			RandomAccessIterator(): _p(0)																	{}
+			RandomAccessIterator(const reference p): _p(&p)													{}
+			RandomAccessIterator(const pointer p): _p(p)													{}
+			template<class U>
+			RandomAccessIterator(const RandomAccessIterator<U>& other): _p(other.base())					{}
+			~RandomAccessIterator()																			{}
 			
 			/* Copy assignment operator */
 			RandomAccessIterator& operator=(const RandomAccessIterator& other)
@@ -51,12 +52,18 @@ namespace ft
 			}
 
 			/* Comparison operators */
-			bool	operator==(const RandomAccessIterator& other) const	{ return (_p == other._p); }
-			bool	operator!=(const RandomAccessIterator& other) const	{ return (_p != other._p); }
-			bool	operator<(const RandomAccessIterator& other) const	{ return (_p < other._p); }
-			bool	operator>(const RandomAccessIterator& other) const	{ return (_p > other._p); }
-			bool	operator<=(const RandomAccessIterator& other) const	{ return (_p <= other._p); }
-			bool	operator>=(const RandomAccessIterator& other) const	{ return (_p >= other._p); }
+			template<class U>
+			bool	operator==(const RandomAccessIterator<U>& other) const	{ return (_p == other.base()); }
+			template<class U>
+			bool	operator!=(const RandomAccessIterator<U>& other) const	{ return (_p != other.base()); }
+			template<class U>
+			bool	operator<(const RandomAccessIterator<U>& other) const	{ return (_p < other.base()); }
+			template<class U>
+			bool	operator>(const RandomAccessIterator<U>& other) const	{ return (_p > other.base()); }
+			template<class U>
+			bool	operator<=(const RandomAccessIterator<U>& other) const	{ return (_p <= other.base()); }
+			template<class U>
+			bool	operator>=(const RandomAccessIterator<U>& other) const	{ return (_p >= other.base()); }
 
 			/* Dereference operators */
 			reference		operator*()			{ return (*_p); }
@@ -66,14 +73,16 @@ namespace ft
 			const_pointer	operator->() const	{return (_p);}
 
 			/* Arithmetic operators */
-			RandomAccessIterator&	operator++()							{ _p++; return (*this); }
-			RandomAccessIterator	operator++(int)							{ RandomAccessIterator it; _p++; return (it); }
-			RandomAccessIterator&	operator--()							{ _p--; return (*this); }
-			RandomAccessIterator	operator--(int)							{ RandomAccessIterator it; _p--; return (it); }
+			RandomAccessIterator&	operator++() 							{ _p++; return (*this); }
+			RandomAccessIterator	operator++(int) 						{ RandomAccessIterator it(_p); _p++; return (it); }
+			RandomAccessIterator&	operator--() 							{ _p--; return (*this); }
+			RandomAccessIterator	operator--(int) 						{ RandomAccessIterator it(_p); _p--; return (it); }
+			
 			RandomAccessIterator	operator+(const size_t& n) const		{ return (_p + n); }
 			RandomAccessIterator	operator-(const size_t& n) const		{ return (_p - n); }
 			RandomAccessIterator&	operator+=(const size_t& n)				{ _p += n; return (*this); }
 			RandomAccessIterator&	operator-=(const size_t& n)				{ _p -= n; return (*this); }
+			
 			long		operator-(const RandomAccessIterator& other) const	{ return (_p - other._p); }
 			
 			/* Offset dereference operator */
@@ -82,7 +91,11 @@ namespace ft
 
 			/* Member function */
 			pointer	base() const { return (_p); }
+			// pointer const base() const { return (_p); }
 	};
+	
+	template<class T>
+	ft::RandomAccessIterator<T>	operator+(const size_t& n, const ft::RandomAccessIterator<T>& it) { return (it + n); }
 };
 
 #endif /* _RANDOMACCESSITERATORS_H_ */
