@@ -30,10 +30,10 @@ namespace ft
 			typedef const value_type&													const_reference;
 			typedef typename Allocator::pointer											pointer;
 			typedef typename Allocator::const_pointer									const_pointer;
-			typedef ft::RandomAccessIterator<T>											iterator;
-			typedef ft::RandomAccessIterator<const T>									const_iterator;
-			typedef ft::reverse_iterator< ft::RandomAccessIterator<T> >					reverse_iterator;
-			typedef ft::reverse_iterator< ft::RandomAccessIterator<const T> >			const_reverse_iterator;
+			typedef ft::RandomAccessIterator<T*>										iterator;
+			typedef ft::RandomAccessIterator<const T*>									const_iterator;
+			typedef ft::reverse_iterator< ft::RandomAccessIterator<T*> >					reverse_iterator;
+			typedef ft::reverse_iterator< ft::RandomAccessIterator<const T*> >			const_reverse_iterator;
 
 			/* Constructors && Destructor */
 			vector(): _arr(0), _alloc(Allocator()), _size(0), _capacity(0) {}

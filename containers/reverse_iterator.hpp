@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:27:38 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/28 13:54:38 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/29 10:00:39 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ namespace ft
 			iterator_type base() const	{ return (current); }
 			
 			/* Offset dereference operator */
-			typename iterator_type::reference operator*() const	{ Iter tmp = current; return (*--tmp); }
-			typename iterator_type::pointer operator->() const	{ return (&*(current - 1)); }
+			reference operator*() const	{ Iter tmp = current; return (*--tmp); }
+			pointer operator->() const	{ return (&*(current - 1)); }
 
 			/* Arithmetic operators */
-			typename iterator_type::reference operator[](difference_type n) const 	{ return (*(current - n - 1)); }
+			reference operator[](difference_type n) const 	{ return (*(current - n - 1)); }
 			reverse_iterator& 	operator++()										{ --current; return (*this); }
 			reverse_iterator& 	operator--()										{ ++current; return (*this); }
 			reverse_iterator 	operator++( int )									{ Iter tmp = current--; return (reverse_iterator(tmp)); }

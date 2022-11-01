@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/28 10:18:18 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/10/29 10:33:13 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ namespace ft
 			~RandomAccessIterator()																			{}
 			
 			/* Copy assignment operator */
-			RandomAccessIterator& operator=(const RandomAccessIterator& other)
+			template<class U>
+			RandomAccessIterator& operator=(const RandomAccessIterator<U>& other)
 			{
-				if (this == &other)
-					return (*this);
-				_p = other._p;
+				_p = other.base();
 				return (*this);
 			}
 
