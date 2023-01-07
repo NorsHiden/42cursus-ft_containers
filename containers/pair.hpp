@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:06 by nelidris          #+#    #+#             */
-/*   Updated: 2022/11/01 13:01:44 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:52:51 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
 		pair( const pair<U1, U2>& p ): first(p.first), second(p.second) {}
 
 		/*Copy assignment operator */
-		pair& operator= (const pair& pr)
+		pair& operator=(const pair& pr)
 		{
 			if (this == &pr)
 				return (*this);

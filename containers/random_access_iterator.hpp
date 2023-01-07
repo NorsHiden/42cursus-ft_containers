@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2022/10/29 10:33:13 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/11/23 09:20:22 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ namespace ft
 		public:
 			/* Constructors && Destructor */
 			RandomAccessIterator(): _p(0)																	{}
-			RandomAccessIterator(const reference p): _p(&p)													{}
-			RandomAccessIterator(const pointer p): _p(p)													{}
+			RandomAccessIterator(const_reference p): _p(&p)													{}
+			RandomAccessIterator(const_pointer p): _p(p)													{}
 			template<class U>
 			RandomAccessIterator(const RandomAccessIterator<U>& other): _p(other.base())					{}
 			~RandomAccessIterator()																			{}

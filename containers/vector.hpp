@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/07 12:06:27 by nelidris          #+#    #+#             */
+/*   Updated: 2023/01/07 12:06:29 by nelidris         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef _VECTOR_H_
 # define _VECTOR_H_
 
@@ -32,7 +44,7 @@ namespace ft
 			typedef typename Allocator::const_pointer									const_pointer;
 			typedef ft::RandomAccessIterator<T*>										iterator;
 			typedef ft::RandomAccessIterator<const T*>									const_iterator;
-			typedef ft::reverse_iterator< ft::RandomAccessIterator<T*> >					reverse_iterator;
+			typedef ft::reverse_iterator< ft::RandomAccessIterator<T*> >				reverse_iterator;
 			typedef ft::reverse_iterator< ft::RandomAccessIterator<const T*> >			const_reverse_iterator;
 
 			/* Constructors && Destructor */
