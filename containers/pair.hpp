@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:06 by nelidris          #+#    #+#             */
-/*   Updated: 2022/11/01 13:52:51 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:49:48 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 		second_type	second;
 
 		/* Constructors */
-		pair() {}
+		pair(): first(), second() {}
 		pair( const first_type& a, const second_type& b ): first(a), second(b) {}
 		
 		template< class U1, class U2 >
@@ -44,7 +44,7 @@ namespace ft
 	
 	/* Non-member Functions */
 	template< class T1, class T2 >
-	ft::pair<T1, T2> make_pair( T1 t, T2 u ) { return (ft::pair(t, u)); }
+	ft::pair<T1, T2> make_pair( T1 t, T2 u ) { return (ft::pair<T1, T2>(t, u)); }
 
 	template< class T1, class T2 >
 	bool operator==( const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs )
