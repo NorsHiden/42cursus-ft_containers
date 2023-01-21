@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 12:06:15 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 13:40:36 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:31:31 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include <iostream>
 # include <functional>
-# include "pair.hpp"
-# include "equal.hpp"
-# include "lexicographical_compare.hpp"
-# include "RedBlackTree.hpp"
-# include "bidirectional_iterator.hpp"
-# include "reverse_iterator.hpp"
+# include "../utils/pair.hpp"
+# include "../utils/equal.hpp"
+# include "../utils/lexicographical_compare.hpp"
+# include "../utils/RedBlackTree.hpp"
+# include "../utils/bidirectional_iterator.hpp"
+# include "../utils/reverse_iterator.hpp"
 
 namespace ft
 {

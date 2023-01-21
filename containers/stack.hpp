@@ -6,14 +6,13 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 09:37:34 by nelidris          #+#    #+#             */
-/*   Updated: 2022/11/26 14:43:31 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:38:41 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _STACK_H_
 # define _STACK_H_
 
-// # include <vector.hpp>
 # include "vector.hpp"
 
 namespace ft

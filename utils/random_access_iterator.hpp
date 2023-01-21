@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2022/11/23 09:20:22 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:40:17 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ namespace ft
 	class RandomAccessIterator
 	{
 		public:
-			typedef typename iterator_traits<T>::iterator_category	iterator_category;
-			typedef typename iterator_traits<T>::value_type			value_type;
-			typedef typename iterator_traits<T>::difference_type	difference_type;
-			typedef typename iterator_traits<T>::pointer			pointer;
-			typedef typename iterator_traits<T>::reference			reference;
+			typedef typename iterator_traits<T*>::iterator_category	iterator_category;
+			typedef typename iterator_traits<T*>::value_type		value_type;
+			typedef typename iterator_traits<T*>::difference_type	difference_type;
+			typedef typename iterator_traits<T*>::pointer			pointer;
+			typedef typename iterator_traits<T*>::reference			reference;
 			typedef	const pointer									const_pointer;
 			typedef const reference									const_reference;
 			
@@ -35,19 +35,22 @@ namespace ft
 			
 		public:
 			/* Constructors && Destructor */
-			RandomAccessIterator(): _p(0)																	{}
-			RandomAccessIterator(const_reference p): _p(&p)													{}
-			RandomAccessIterator(const_pointer p): _p(p)													{}
-			template<class U>
-			RandomAccessIterator(const RandomAccessIterator<U>& other): _p(other.base())					{}
-			~RandomAccessIterator()																			{}
+			RandomAccessIterator(): _p(0)												{}
+			RandomAccessIterator(const_reference p): _p(&p)								{}
+			RandomAccessIterator(const_pointer p): _p(p)								{}
+			RandomAccessIterator(const RandomAccessIterator& other): _p(other.base())	{}
+			~RandomAccessIterator()														{}
 			
 			/* Copy assignment operator */
-			template<class U>
-			RandomAccessIterator& operator=(const RandomAccessIterator<U>& other)
+			RandomAccessIterator& operator=(const RandomAccessIterator& other)
 			{
 				_p = other.base();
 				return (*this);
+			}
+
+			operator	RandomAccessIterator<const T>()
+			{
+				return (RandomAccessIterator<const T>(_p));
 			}
 
 			/* Comparison operators */
@@ -72,15 +75,14 @@ namespace ft
 			const_pointer	operator->() const	{return (_p);}
 
 			/* Arithmetic operators */
-			RandomAccessIterator&	operator++() 							{ _p++; return (*this); }
-			RandomAccessIterator	operator++(int) 						{ RandomAccessIterator it(_p); _p++; return (it); }
-			RandomAccessIterator&	operator--() 							{ _p--; return (*this); }
-			RandomAccessIterator	operator--(int) 						{ RandomAccessIterator it(_p); _p--; return (it); }
-			
-			RandomAccessIterator	operator+(const size_t& n) const		{ return (_p + n); }
-			RandomAccessIterator	operator-(const size_t& n) const		{ return (_p - n); }
-			RandomAccessIterator&	operator+=(const size_t& n)				{ _p += n; return (*this); }
-			RandomAccessIterator&	operator-=(const size_t& n)				{ _p -= n; return (*this); }
+			RandomAccessIterator&	operator++() 						{ _p++; return (*this); }
+			RandomAccessIterator	operator++(int) 					{ RandomAccessIterator it(_p); _p++; return (it); }
+			RandomAccessIterator&	operator--() 						{ _p--; return (*this); }
+			RandomAccessIterator	operator--(int) 					{ RandomAccessIterator it(_p); _p--; return (it); }
+			RandomAccessIterator	operator+(const size_t& n) const	{ return (_p + n); }
+			RandomAccessIterator	operator-(const size_t& n) const	{ return (_p - n); }
+			RandomAccessIterator&	operator+=(const size_t& n)			{ _p += n; return (*this); }
+			RandomAccessIterator&	operator-=(const size_t& n)			{ _p -= n; return (*this); }
 			
 			long		operator-(const RandomAccessIterator& other) const	{ return (_p - other._p); }
 			
@@ -90,7 +92,6 @@ namespace ft
 
 			/* Member function */
 			pointer	base() const { return (_p); }
-			// pointer const base() const { return (_p); }
 	};
 	
 	template<class T>

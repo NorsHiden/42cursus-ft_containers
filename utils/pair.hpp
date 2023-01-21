@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:13:06 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/18 18:49:48 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:33:02 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ namespace ft
 	{
 		return (lhs.first < rhs.first && lhs.second < rhs.second);
 	}
+	
 	template< class T1, class T2 >
 	bool operator<=( const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs )
 	{
@@ -74,6 +75,7 @@ namespace ft
 	{
 		return (!(lhs < rhs));
 	}
+
 	template< class T1, class T2 >
 	bool operator>=( const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs )
 	{

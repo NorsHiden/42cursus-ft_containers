@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:27:38 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 11:18:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:34:51 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ namespace ft
 
 			/* Arithmetic operators */
 			reference operator[](difference_type n) const 	{ return (*(current - n - 1)); }
-			reverse_iterator& 	operator++()										{ --current; return (*this); }
-			reverse_iterator& 	operator--()										{ ++current; return (*this); }
-			reverse_iterator 	operator++( int )									{ Iter tmp = current--; return (reverse_iterator(tmp)); }
-			reverse_iterator 	operator--( int )									{ Iter tmp = current++; return (reverse_iterator(tmp)); }
-			reverse_iterator 	operator+( difference_type n ) const				{ return ( reverse_iterator(current - n) ); }
-			reverse_iterator 	operator-( difference_type n ) const				{ return ( reverse_iterator(current + n) ); }
-			reverse_iterator& 	operator+=( difference_type n )						{ current -= n ;return (*this); }
-			reverse_iterator& 	operator-=( difference_type n )						{ current += n ;return (*this); }
+			reverse_iterator& 	operator++()							{ --current; return (*this); }
+			reverse_iterator& 	operator--()							{ ++current; return (*this); }
+			reverse_iterator 	operator++( int )						{ Iter tmp = current--; return (reverse_iterator(tmp)); }
+			reverse_iterator 	operator--( int )						{ Iter tmp = current++; return (reverse_iterator(tmp)); }
+			reverse_iterator 	operator+( difference_type n ) const	{ return ( reverse_iterator(current - n) ); }
+			reverse_iterator 	operator-( difference_type n ) const	{ return ( reverse_iterator(current + n) ); }
+			reverse_iterator& 	operator+=( difference_type n )			{ current -= n ;return (*this); }
+			reverse_iterator& 	operator-=( difference_type n )			{ current += n ;return (*this); }
 	};
 
 	/* Non-member function */

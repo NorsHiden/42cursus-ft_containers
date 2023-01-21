@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 11:10:59 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:32:39 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ namespace ft
 			typedef const reference										const_reference;
 			
 		private:
-			Node*		_p;
-			Node*		_root;
+			Node*	_p;
+			Node*	_root;
 			
 		public:
 			/* Constructors && Destructor */
-			BidirectionalIterator(): _p(0), _root(0)														{}
-			BidirectionalIterator(Node* p, Node* root): _p(p), _root(root)					{}
+			BidirectionalIterator(): _p(0), _root(0)								{}
+			BidirectionalIterator(Node* p, Node* root): _p(p), _root(root)			{}
 			BidirectionalIterator(const BidirectionalIterator<Node, Value>& other)
-				: _p(other._p), _root(other._root)												{}
-			~BidirectionalIterator()																		{}
+				: _p(other._p), _root(other._root)									{}
+			~BidirectionalIterator()												{}
 			
 			/* Copy assignment operator */
 			BidirectionalIterator& operator=(const BidirectionalIterator<Node, Value>& other)
@@ -197,7 +197,6 @@ namespace ft
 
 			/* Member function */
 			Node*	base() const { return (_p); }
-			// pointer const base() const { return (_p); }
 	};
 	
 };

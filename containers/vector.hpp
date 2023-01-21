@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 12:06:27 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/07 12:06:29 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:40:05 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define _VECTOR_H_
 
 # include <iostream>
-# include "equal.hpp"
-# include "random_access_iterator.hpp"
-# include "type_traits.hpp"
-# include "reverse_iterator.hpp"
-# include "lexicographical_compare.hpp"
+# include "../utils/equal.hpp"
+# include "../utils/random_access_iterator.hpp"
+# include "../utils/type_traits.hpp"
+# include "../utils/reverse_iterator.hpp"
+# include "../utils/lexicographical_compare.hpp"
 
 # define ENABLE_IF typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type
 
@@ -42,10 +42,10 @@ namespace ft
 			typedef const value_type&													const_reference;
 			typedef typename Allocator::pointer											pointer;
 			typedef typename Allocator::const_pointer									const_pointer;
-			typedef ft::RandomAccessIterator<T*>										iterator;
-			typedef ft::RandomAccessIterator<const T*>									const_iterator;
-			typedef ft::reverse_iterator< ft::RandomAccessIterator<T*> >				reverse_iterator;
-			typedef ft::reverse_iterator< ft::RandomAccessIterator<const T*> >			const_reverse_iterator;
+			typedef ft::RandomAccessIterator<T>											iterator;
+			typedef ft::RandomAccessIterator<const T>									const_iterator;
+			typedef ft::reverse_iterator< ft::RandomAccessIterator<T> >					reverse_iterator;
+			typedef ft::reverse_iterator< ft::RandomAccessIterator<const T> >			const_reverse_iterator;
 
 			/* Constructors && Destructor */
 			vector(): _arr(0), _alloc(Allocator()), _size(0), _capacity(0) {}

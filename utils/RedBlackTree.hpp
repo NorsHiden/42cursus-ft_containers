@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:47:50 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 13:35:01 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 16:34:18 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ class RedBlackTree
 		typedef Compare						compare_type;
 		typedef typename Node::value_type	value_type;
 
-	
 	private:
 		Node													*root;
 		allocator_type											alloc;
@@ -509,26 +508,6 @@ class RedBlackTree
 		}
 		
 		Node	*base() const { return (root); }
-
-		// void	printTree(Node *node = 0)
-		// {
-		// 	if (!root) return ;
-
-		// 	if (!node)
-		// 		printTree(root);
-		// 	else
-		// 	{
-		// 		if (node->left)
-		// 			printTree(node->left);
-		// 		if (!node->parent)
-		// 			std::cout << "root --> ";
-		// 		if (node->color == RED)
-		// 			std::cout << "\033[0;31m";
-		// 		std::cout << node->content->first << "\033[0;37m" << std::endl;
-		// 		if (node->right)
-		// 			printTree(node->right);
-		// 	}
-		// }
 };
 
 #endif /* _REDBLACKTREE_ */
