@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:27:38 by nelidris          #+#    #+#             */
-/*   Updated: 2022/11/25 15:51:11 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 11:18:50 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 			
 			/* Offset dereference operator */
 			reference operator*() const	{ Iter tmp = current; return (*--tmp); }
-			pointer operator->() const	{ return (&*(current - 1)); }
+			pointer operator->() const	{ Iter tmp = current; return (&*(--tmp)); }
 
 			/* Arithmetic operators */
 			reference operator[](difference_type n) const 	{ return (*(current - n - 1)); }

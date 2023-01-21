@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/20 12:42:32 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 11:10:59 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,38 +18,41 @@
 
 namespace ft
 {
-	template<class T, class Value>
+	template<class Node, class Value>
 	class BidirectionalIterator
 	{
 		public:
-			typedef typename std::bidirectional_iterator_tag		iterator_category;
-			typedef typename iterator_traits<T>::value_type			value_type;
-			typedef typename iterator_traits<T>::difference_type	difference_type;
-			typedef typename iterator_traits<T>::pointer			pointer;
-			typedef typename iterator_traits<T>::reference			reference;
-			typedef	const pointer									const_pointer;
-			typedef const reference									const_reference;
-			typedef Value											content_value;
+			typedef typename std::bidirectional_iterator_tag			iterator_category;
+			typedef typename iterator_traits<Value*>::value_type		value_type;
+			typedef typename iterator_traits<Value*>::difference_type	difference_type;
+			typedef typename iterator_traits<Value*>::pointer			pointer;
+			typedef typename iterator_traits<Value*>::reference			reference;
+			typedef	const pointer										const_pointer;
+			typedef const reference										const_reference;
 			
 		private:
-			pointer		_p;
-			pointer		_root;
+			Node*		_p;
+			Node*		_root;
 			
 		public:
 			/* Constructors && Destructor */
 			BidirectionalIterator(): _p(0), _root(0)														{}
-			BidirectionalIterator(const_pointer p, const_pointer root): _p(p), _root(root)					{}
-			template<class U, class V>
-			BidirectionalIterator(const BidirectionalIterator<U, V>& other): _p(other.base()), _root(other.root_base())		{}  // TODO: root need to be added
+			BidirectionalIterator(Node* p, Node* root): _p(p), _root(root)					{}
+			BidirectionalIterator(const BidirectionalIterator<Node, Value>& other)
+				: _p(other._p), _root(other._root)												{}
 			~BidirectionalIterator()																		{}
 			
 			/* Copy assignment operator */
-			template<class U, class V>
-			BidirectionalIterator& operator=(const BidirectionalIterator<U, V>& other)
+			BidirectionalIterator& operator=(const BidirectionalIterator<Node, Value>& other)
 			{
-				_p = other.base();
-				_root = other.root_base();
+				_p = other._p;
+				_root = other._root;
 				return (*this);
+			}
+
+			operator	BidirectionalIterator<Node, const Value>()
+			{
+				return (BidirectionalIterator<Node, const Value>(_p, _root));
 			}
 
 			/* Comparison operators */
@@ -59,11 +62,11 @@ namespace ft
 			bool	operator!=(const BidirectionalIterator<U, V>& other) const	{ return (_p != other.base()); }
 
 			/* Dereference operators */
-			content_value&			operator*()			{ return (*_p->content); }
-			const content_value&	operator*() const	{ return (*_p->content); }
+			value_type&			operator*()			{ return (*_p->content); }
+			const value_type&	operator*() const	{ return (*_p->content); }
 			
-			content_value*			operator->()		{return (_p->content);}
-			const content_value*	operator->() const	{return (_p->content);}
+			value_type*			operator->()		{return (_p->content);}
+			const value_type*	operator->() const	{return (_p->content);}
 
 			/* Arithmetic operators */
 			BidirectionalIterator&	operator++()
@@ -162,7 +165,7 @@ namespace ft
 			
 			BidirectionalIterator	operator--(int)
 			{
-				BidirectionalIterator it(_p);
+				BidirectionalIterator it(_p, _root);
 					if (!_p)
 				{
 					_p = _root;
@@ -193,8 +196,7 @@ namespace ft
 			}
 
 			/* Member function */
-			pointer	base() const { return (_p); }
-			pointer	root_base() const { return (_root); }
+			Node*	base() const { return (_p); }
 			// pointer const base() const { return (_p); }
 	};
 	

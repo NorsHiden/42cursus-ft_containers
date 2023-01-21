@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:47:50 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/20 19:16:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:35:01 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,7 +329,7 @@ class RedBlackTree
 			root = nullptr;
 		}
 
-		Node *begin()
+		Node *begin() const
 		{
 			Node	*curr = root;
 			while (curr && curr->left)
@@ -337,7 +337,7 @@ class RedBlackTree
 			return (curr);
 		}
 
-		Node *end() { return (nullptr); }
+		Node *end() const { return (nullptr); }
 
 		Node	*search(const value_type& content) const
 		{
@@ -461,7 +461,54 @@ class RedBlackTree
 			return (true);
 		}
 		
-		Node	*base() { return (root); }
+		void	swap(RedBlackTree& x)
+		{
+			Node *tmp = root;
+			root = x.root;
+			x.root = tmp;
+		}
+
+		Node* lower_bound (const value_type& content) const
+		{
+			Node *x = root;
+			Node *close = 0;
+			
+			while (x)
+			{
+				if (x->rhs_compare(content, comp))
+				{
+					close = x;
+					x = x->left;
+				}
+				else if (x->lhs_compare(content, comp))
+					x = x->right;
+				else
+					return (x);
+			}
+			return (close);
+		}
+
+		Node* upper_bound (const value_type& content) const
+		{
+			Node *x = root;
+			Node *close = 0;
+			
+			while (x)
+			{
+				if (x->rhs_compare(content, comp))
+				{
+					close = x;
+					x = x->left;
+				}
+				else if (x->lhs_compare(content, comp))
+					x = x->right;
+				else
+					x = x->right;
+			}
+			return (close);
+		}
+		
+		Node	*base() const { return (root); }
 
 		// void	printTree(Node *node = 0)
 		// {
