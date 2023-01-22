@@ -6,12 +6,12 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/22 11:06:20 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:35:34 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _BIDIRECTIONAL_ITERATOR_H_
-# define _RANDOMACCESSITERATORS_H_
+# define _BIDIRECTIONAL_ITERATOR_H_
 
 # include <iostream>
 # include "iterator_traits.hpp"
@@ -153,4 +153,4 @@ namespace ft
 	
 };
 
-#endif /* _RANDOMACCESSITERATORS_H_ */
+#endif /* _BIDIRECTIONAL_ITERATOR_H_ */

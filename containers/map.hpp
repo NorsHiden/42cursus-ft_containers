@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 12:06:15 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/22 13:30:47 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:22:04 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <iostream>
 # include <functional>
 # include "../utils/pair.hpp"
-# include "../utils/equal.hpp"
 # include "../utils/lexicographical_compare.hpp"
 # include "../utils/RedBlackTree.hpp"
 # include "../utils/bidirectional_iterator.hpp"
@@ -175,7 +174,7 @@ namespace ft
 			}
 
 			/* Modifiers */
-			pair<iterator,bool> insert (const value_type& val)
+			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				Node	*node = rbt.search(val);
 				if (node)
@@ -265,9 +264,9 @@ namespace ft
 			
 			const_iterator upper_bound (const key_type& k) const { return (const_iterator(rbt.upper_bound(value_type(k, mapped_type())), rbt.base()));}
 
-			pair<iterator,iterator>	equal_range (const key_type& k) { return (pair<iterator,iterator>(lower_bound(k), upper_bound(k))); }
+			ft::pair<iterator,iterator>	equal_range (const key_type& k) { return (ft::pair<iterator,iterator>(lower_bound(k), upper_bound(k))); }
 			
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return (pair<const_iterator,const_iterator>(lower_bound(k), upper_bound(k))); }		
+			ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return (ft::pair<const_iterator,const_iterator>(lower_bound(k), upper_bound(k))); }		
 
 			/* Allocator */
 			allocator_type get_allocator() const { return (allocator_type()); }
