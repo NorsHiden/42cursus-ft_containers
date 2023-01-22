@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 09:02:31 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/17 16:20:49 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 10:58:54 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ namespace ft
 	template <class T>
 	struct iterator_traits<const T*>
 	{
-		typedef T									value_type;
-		typedef std::ptrdiff_t						difference_type;
-		typedef const T*							pointer;
-		typedef const T&							reference;
+		typedef T								value_type;
+		typedef std::ptrdiff_t					difference_type;
+		typedef const T*						pointer;
+		typedef const T&						reference;
 		typedef std::random_access_iterator_tag	iterator_category;
 	};
 };

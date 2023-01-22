@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 12:06:15 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 16:31:31 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 13:30:47 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ namespace ft
 			class value_compare
 			{
 				public:
-					typedef typename std::binary_function<value_type, value_type, bool>::result_type				result_type;
-					typedef typename std::binary_function<value_type, value_type, bool>::first_argument_type		first_argument_type;
+					typedef typename std::binary_function<value_type, value_type, bool>::result_type			result_type;
+					typedef typename std::binary_function<value_type, value_type, bool>::first_argument_type	first_argument_type;
 					typedef typename std::binary_function<value_type, value_type, bool>::second_argument_type	second_argument_type;
 				protected:
 					key_compare comp;
@@ -107,15 +107,7 @@ namespace ft
 			
 			template<class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-				: rbt(), _size(0), alloc(alloc), comp(comp)
-			{
-				for (InputIterator it = first; it != last; ++it)
-				{
-					rbt.insert(*it);
-					_size++;
-				}
-				// rbt.printTree();
-			}
+				: rbt(), _size(0), alloc(alloc), comp(comp) { insert(first, last); }
 
 			map (const map& x): rbt(x.rbt), _size(x._size), alloc(x.alloc), comp(x.comp) {}
 
@@ -227,7 +219,7 @@ namespace ft
 			}
 			
 			void swap (map& x)
-			{	
+			{
 				rbt.swap(x.rbt);	
 				size_type s = x._size;
 				x._size = _size;
@@ -283,65 +275,41 @@ namespace ft
 			key_compare key_comp() const { return (comp); }
 			value_compare value_comp() const { return (value_compare()); }
 	};
-	
+
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator==( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() != rhs.size())
-			return (false);
-		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+		return (!ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) && !ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() != rhs.size())
-			return (true);
-		return (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+		return (!(lhs == rhs));
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() > rhs.size())
-			return (false);
-		if (lhs.size() < rhs.size())
-			return (true);
-		if (!lhs.size() && rhs.size())
-			return (true);
-		return (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator<=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() < rhs.size())
-			return (true);
-		if (lhs.size() == rhs.size())
-			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) || ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-		return (false);
+		return (lhs < rhs || lhs == rhs);
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator>( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() < rhs.size())
-			return (false);
-		if (lhs.size() > rhs.size())
-			return (true);
-		if (!rhs.size() && lhs.size())
-			return (true);
-		return (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && !ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() > rhs.size())
-			return (true);
-		if (lhs.size() == rhs.size())
-			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) || !ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-		return (false);
+		return (lhs > rhs || lhs == rhs);
 	}
 
 	template< class Key, class T, class Compare, class Alloc >

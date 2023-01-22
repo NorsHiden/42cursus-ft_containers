@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 16:32:39 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 11:06:20 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _RANDOMACCESSITERATORS_H_
+#ifndef _BIDIRECTIONAL_ITERATOR_H_
 # define _RANDOMACCESSITERATORS_H_
 
 # include <iostream>
@@ -33,6 +33,66 @@ namespace ft
 		private:
 			Node*	_p;
 			Node*	_root;
+
+			void	successor()
+			{
+				if (!_p)
+				{
+					_p = _root;
+					while (_p->left)
+						_p = _p->left;
+				}
+				else if (_p->right)
+				{
+					_p = _p->right;
+					while (_p->left)
+						_p = _p->left;
+				}
+				else if (_p->parent && _p->parent->left == _p)
+					_p = _p->parent;
+				else if (_p->parent && _p->parent->right == _p)
+				{
+					_p = _p->parent;
+					while (_p->parent && _p->parent->right == _p)
+						_p = _p->parent;
+					if (!_p->parent)
+						_p = nullptr;
+					else
+						_p = _p->parent;
+				}
+				else
+					_p = nullptr;
+			}
+
+			void	predecessor()
+			{
+				if (!_p)
+				{
+					_p = _root;
+					while (_p->right)
+						_p = _p->right;
+				}
+				else if (_p->left)
+				{
+					_p = _p->left;
+					while (_p->right)
+						_p = _p->right;
+				}
+				else if (_p->parent && _p->parent->right == _p)
+					_p = _p->parent;
+				else if (_p->parent && _p->parent->left == _p)
+				{
+					_p = _p->parent;
+					while (_p->parent && _p->parent->left == _p)
+						_p = _p->parent;
+					if (!_p->parent)
+						_p = nullptr;
+					else
+						_p = _p->parent;
+				}
+				else
+					_p = nullptr;
+			}
 			
 		public:
 			/* Constructors && Destructor */
@@ -62,136 +122,28 @@ namespace ft
 			bool	operator!=(const BidirectionalIterator<U, V>& other) const	{ return (_p != other.base()); }
 
 			/* Dereference operators */
-			value_type&			operator*()			{ return (*_p->content); }
-			const value_type&	operator*() const	{ return (*_p->content); }
+			reference			operator*()			{ return (*_p->content); }
+			const_reference		operator*() const	{ return (*_p->content); }
 			
-			value_type*			operator->()		{return (_p->content);}
-			const value_type*	operator->() const	{return (_p->content);}
+			pointer				operator->()		{return (_p->content);}
+			const_pointer				operator->() const	{return (_p->content);}
 
 			/* Arithmetic operators */
-			BidirectionalIterator&	operator++()
-			{
-				if (!_p)
-				{
-					_p = _root;
-					while (_p->left)
-						_p = _p->left;
-				}
-				else if (_p->right)
-				{
-					_p = _p->right;
-					while (_p->left)
-						_p = _p->left;
-				}
-				else if (_p->parent && _p->parent->left == _p)
-					_p = _p->parent;
-				else if (_p->parent && _p->parent->right == _p)
-				{
-					_p = _p->parent;
-					while (_p->parent && _p->parent->right == _p)
-						_p = _p->parent;
-					if (!_p->parent)
-						_p = nullptr;
-					else
-						_p = _p->parent;
-				}
-				else
-					_p = nullptr;
-				return (*this);
-			}
+			BidirectionalIterator&	operator++() { successor(); return (*this); }
 			
 			BidirectionalIterator	operator++(int)
 			{
 				BidirectionalIterator it(_p, _root);
-				if (!_p)
-				{
-					_p = _root;
-					while (_p->left)
-						_p = _p->left;
-				}
-				else if (_p->right)
-				{
-					_p = _p->right;
-					while (_p->left)
-						_p = _p->left;
-				}
-				else if (_p->parent && _p->parent->left == _p)
-					_p = _p->parent;
-				else if (_p->parent && _p->parent->right == _p)
-				{
-					_p = _p->parent;
-					while (_p->parent && _p->parent->right == _p)
-						_p = _p->parent;
-					if (!_p->parent)
-						_p = nullptr;
-					else
-						_p = _p->parent;
-				}
-				else
-					_p = nullptr;
+				successor();
 				return (it);
 			}
 
-			BidirectionalIterator&	operator--()
-			{
-				if (!_p)
-				{
-					_p = _root;
-					while (_p->right)
-						_p = _p->right;
-				}
-				else if (_p->left)
-				{
-					_p = _p->left;
-					while (_p->right)
-						_p = _p->right;
-				}
-				else if (_p->parent && _p->parent->right == _p)
-					_p = _p->parent;
-				else if (_p->parent && _p->parent->left == _p)
-				{
-					_p = _p->parent;
-					while (_p->parent && _p->parent->left == _p)
-						_p = _p->parent;
-					if (!_p->parent)
-						_p = nullptr;
-					else
-						_p = _p->parent;
-				}
-				else
-					_p = nullptr;
-				return (*this);
-			}
+			BidirectionalIterator&	operator--() { predecessor(); return (*this); }
 			
 			BidirectionalIterator	operator--(int)
 			{
 				BidirectionalIterator it(_p, _root);
-					if (!_p)
-				{
-					_p = _root;
-					while (_p->right)
-						_p = _p->right;
-				}
-				else if (_p->left)
-				{
-					_p = _p->left;
-					while (_p->right)
-						_p = _p->right;
-				}
-				else if (_p->parent && _p->parent->right == _p)
-					_p = _p->parent;
-				else if (_p->parent && _p->parent->left == _p)
-				{
-					_p = _p->parent;
-					while (_p->parent && _p->parent->left == _p)
-						_p = _p->parent;
-					if (!_p->parent)
-						_p = nullptr;
-					else
-						_p = _p->parent;
-				}
-				else
-					_p = nullptr;
+				predecessor();
 				return (it);
 			}
 

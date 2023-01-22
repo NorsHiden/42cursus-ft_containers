@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 08:52:11 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 16:40:17 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/21 19:00:04 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ namespace ft
 			RandomAccessIterator&	operator+=(const size_t& n)			{ _p += n; return (*this); }
 			RandomAccessIterator&	operator-=(const size_t& n)			{ _p -= n; return (*this); }
 			
-			long		operator-(const RandomAccessIterator& other) const	{ return (_p - other._p); }
+			template<class U>
+			long		operator-(const RandomAccessIterator<U>& other) const	{ return (_p - other.base()); }
 			
 			/* Offset dereference operator */
 			reference operator[](const size_t& idx)				{ return (*(_p + idx)); }
