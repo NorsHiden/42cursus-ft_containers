@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 12:06:15 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/22 14:22:04 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:56:57 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ namespace ft
 			typedef ft::reverse_iterator< ft::BidirectionalIterator<Node, const value_type> >	const_reverse_iterator;
 			
 		private:
-			RedBlackTree<Node, allocator_type, key_compare>			rbt;
-			size_type												_size;
-			allocator_type											alloc;
-			key_compare												comp;
+			RedBlackTree<Node, allocator_type, key_compare>	rbt;
+			size_type										_size;
+			allocator_type									alloc;
+			key_compare										comp;
 		
 		public:
 			/* Function object */
@@ -270,6 +270,7 @@ namespace ft
 
 			/* Allocator */
 			allocator_type get_allocator() const { return (allocator_type()); }
+			
 			/* Observers */
 			key_compare key_comp() const { return (comp); }
 			value_compare value_comp() const { return (value_compare()); }

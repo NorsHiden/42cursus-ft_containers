@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 12:06:27 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/21 18:49:58 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:14:02 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ namespace ft
 				if (_alloc.max_size() < count)
 					throw (std::length_error("vector"));
 				clear();
+				reserve(count);
 				for (size_type i = 0; i < count; i++)
 					push_back(value);
 			}
