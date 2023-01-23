@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:40:41 by nelidris          #+#    #+#             */
-/*   Updated: 2023/01/22 14:48:30 by nelidris         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:01:21 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,8 @@ namespace ft
 				Node	*node = rbt.search(value);
 				if (node)
 					return (pair<iterator, bool>(iterator(node, rbt.base()), false));
-				value_type*	cont = new value_type(value);
 				_size++;
-				return (pair<iterator, bool>(iterator(rbt.insert(*cont), rbt.base()), true));
+				return (pair<iterator, bool>(iterator(rbt.insert(value), rbt.base()), true));
 			}
 
 			iterator insert (iterator position, const value_type& val)
